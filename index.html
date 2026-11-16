@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your Shop Name – Demo Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#dfe5e8;--card:#f3f6f7;--ink:#14202b;--mute:#566673;--line:#c3ced4;--brass:#a8730d;--brass-ink:#fff;--ok:#1f7a4d;--warn:#b45309;--bad:#b42318;--mpesa:#2e9e44;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f171d;--card:#18232b;--ink:#e8edf0;--mute:#93a4b0;--line:#2b3a45;--brass:#e0a93b;--brass-ink:#1a1204;--ok:#4cc38a;--warn:#f0a34a;--bad:#ff8a7a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f171d;--card:#18232b;--ink:#e8edf0;--mute:#93a4b0;--line:#2b3a45;--brass:#e0a93b;--brass-ink:#1a1204;--ok:#4cc38a;--warn:#f0a34a;--bad:#ff8a7a;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "DM Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",Georgia,serif;margin:0;line-height:1.05}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px}
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:10px;flex-wrap:wrap}
+.logo{font:800 1.4rem "Bricolage Grotesque",Georgia,serif}
+nav{display:flex;gap:6px;align-items:center}
+.tab{background:none;border:1px solid transparent;padding:8px 14px;border-radius:999px;font-weight:500}
+.tab[aria-pressed="true"]{border-color:var(--ink)}
+.cartbtn{background:var(--ink);color:var(--bg);border:0;padding:8px 16px;border-radius:999px;font-weight:700}
+.hero{position:relative;overflow:hidden;padding:44px 0 36px}
+.hero h1{font-size:clamp(2.8rem,11vw,7rem);font-weight:800;letter-spacing:-.04em}
+.hero p{max-width:46ch;color:var(--mute);margin:14px 0 0;font-size:1.1rem}
+@media(prefers-reduced-motion:reduce){.facts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-size:.9rem}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 18px}
+.filters button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;padding-bottom:50px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.tile{height:130px;display:grid;place-items:center;background:color-mix(in srgb,var(--brass) 14%,var(--card))}
+.tile svg{width:74px;height:74px;stroke:var(--ink);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.cbody{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.cbody h3{font-size:1.15rem}
+.price{font-weight:700}
+.stock{font-size:.85rem;font-weight:500}
+.ok{color:var(--ok)}.low{color:var(--warn)}.out{color:var(--bad)}
+.add{margin-top:auto;background:var(--brass);color:var(--brass-ink);border:0;border-radius:10px;padding:10px;font-weight:700}
+.add:disabled{background:var(--line);color:var(--mute);cursor:not-allowed}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);font-size:.95rem}
+.scroll{overflow-x:auto;margin-bottom:24px}
+.mini{border:1px solid var(--line);background:none;border-radius:8px;padding:4px 10px}
+.panel{padding:20px 0 50px}.panel h2{font-size:2rem;margin-bottom:14px}
+.scrim{position:fixed;inset:0;background:rgba(5,10,14,.6);display:none;z-index:20}
+.scrim.on{display:block}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--bg);z-index:21;padding:calc(18px + env(safe-area-inset-top,0px)) 18px calc(18px + env(safe-area-inset-bottom,0px));overflow-y:auto;transform:translateX(100%);transition:transform .25s}
+.drawer.on{transform:none}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.qty{display:flex;gap:6px;align-items:center}
+.qty button{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:var(--card)}
+fieldset{border:1px solid var(--line);border-radius:12px;margin:16px 0;padding:10px 14px}
+legend{font-weight:700;padding:0 6px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:8px 0}
+.opt small{color:var(--mute);display:block}
+select,input[type=tel],input[type=text]{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--card);margin-top:6px}
+.total{display:flex;justify-content:space-between;font-weight:700;font-size:1.2rem;padding:10px 0}
+.pay{width:100%;background:var(--mpesa);color:#fff;border:0;border-radius:12px;padding:14px;font-weight:700;font-size:1.05rem}
+.err{color:var(--bad);min-height:1.4em;font-size:.9rem}
+.modal{position:fixed;inset:0;z-index:30;display:none;place-items:center;background:rgba(5,10,14,.75);padding:18px}
+.modal.on{display:grid}
+.box{background:var(--card);border-radius:16px;padding:24px;max-width:400px;width:100%;text-align:center}
+.box h2{font-size:1.6rem;margin-bottom:8px}
+.stk{border:2px solid var(--mpesa);border-radius:14px;padding:14px;margin:14px 0;text-align:left;background:var(--bg)}
+.btn{background:var(--ink);color:var(--bg);border:0;border-radius:10px;padding:12px 18px;font-weight:700}
+.ghost{background:none;border:1px solid var(--line);border-radius:10px;padding:12px 18px}
+footer{border-top:1px solid var(--line);padding:20px 0 40px;color:var(--mute);font-size:.88rem}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">Your Shop Name</div>
+    <nav>
+      <button class="tab" id="tShop" aria-pressed="true">Shop</button>
+      <button class="tab" id="tInv" aria-pressed="false">Inventory</button>
+      <button class="cartbtn" id="cartBtn">Cart (<span id="cc">0</span>)</button>
+    </nav>
+  </header>
+
+  <section id="vShop">
+    <div class="hero">
+      <h1>Your Shop Name</h1>
+      <p>Hookahs, shisha and accessories with live stock counts and M-Pesa checkout. Your products, prices and branding go here.</p>
+      <div class="facts"><span class="chip">18+ only</span><span class="chip">Lipa na M-Pesa</span><span class="chip">Live stock counts</span><span class="chip">Inventory dashboard</span></div>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="vInv" class="panel hide">
+    <h2>Stock and orders</h2>
+    <div class="scroll"><table><thead><tr><th>Item</th><th>Category</th><th>Price</th><th>In stock</th><th></th></tr></thead><tbody id="invBody"></tbody></table></div>
+    <h2>Recent orders</h2>
+    <div class="scroll"><table><thead><tr><th>M-Pesa code</th><th>Items</th><th>Customer</th><th>Total</th></tr></thead><tbody id="ordBody"><tr><td colspan="4">No orders yet. Place one from the shop and it shows up here.</td></tr></tbody></table></div>
+  </section>
+
+  <footer>Demo storefront. Products and prices are sample data. No real payments are made. Sale to persons under 18 is prohibited.</footer>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Cart and checkout">
+  <div class="row" style="border:0"><h2 style="font-size:1.6rem">Your cart</h2><button class="ghost" id="closeCart">Close</button></div>
+  <div id="items"></div>
+  <label for="phone"><b>M-Pesa number</b></label>
+  <input type="tel" id="phone" placeholder="0712 345 678" inputmode="tel">
+  <div class="err" id="err"></div>
+  <div class="total"><span>Total</span><span id="tot">KES 0</span></div>
+  <button class="pay" id="payBtn">Pay with M-Pesa</button>
+</aside>
+
+<div class="modal" id="modal"><div class="box" id="box"></div></div>
+
+<div class="modal on" id="gate"><div class="box"><h2>Are you 18 or older?</h2><p>This shop sells to adults only.</p><button class="btn" id="yes">Yes, I’m 18 or older</button> <a class="ghost" style="display:inline-block;text-decoration:none;color:inherit" href="https://www.google.com">No, leave</a></div></div>
+
+
+<script>
+const P=[
+{id:1,n:"Brass hookah, 2-hose",c:"Hookahs",p:9500,s:6,i:"h"},
+{id:2,n:"Glass hookah, large",c:"Hookahs",p:12500,s:3,i:"h"},
+{id:3,n:"Shisha 50g, double apple",c:"Shisha",p:650,s:24,i:"h2"},
+{id:4,n:"Shisha 50g, mint",c:"Shisha",p:650,s:18,i:"h2"},
+{id:5,n:"Shisha 50g, grape",c:"Shisha",p:650,s:2,i:"h2"},
+{id:6,n:"Coconut charcoal, 1 kg",c:"Charcoal",p:900,s:12,i:"g"},
+{id:7,n:"Silicone hookah hose",c:"Accessories",p:800,s:15,i:"k"},
+{id:8,n:"Mouth tips, pack of 10",c:"Accessories",p:300,s:40,i:"r"},
+{id:9,n:"Steel tongs",c:"Accessories",p:450,s:0,i:"k"},
+{id:10,n:"Windproof lighter",c:"Accessories",p:1800,s:7,i:"l"}
+];
+const ICON={h:'<path d="M32 6v8M26 14h12l-2 10H28zM32 24v14M18 58c0-12 6-20 14-20s14 8 14 20zM46 40c8 0 10 6 10 12"/>',h2:'<circle cx="32" cy="32" r="20"/><path d="M22 32h20M32 22v20"/>',l:'<rect x="20" y="22" width="24" height="36" rx="4"/><path d="M26 22v-8h12v8M32 14c-3-4 3-6 0-10"/>',r:'<rect x="10" y="20" width="44" height="26" rx="3"/><path d="M10 28h44M24 20v26"/>',g:'<ellipse cx="32" cy="22" rx="18" ry="8"/><path d="M14 22v22c0 5 8 8 18 8s18-3 18-8V22M14 33c0 5 8 8 18 8s18-3 18-8"/>',k:'<path d="M8 50L50 8l6 6L14 56zM36 22l6 6"/>',a:'<path d="M14 22h28v24a8 8 0 0 1-8 8H22a8 8 0 0 1-8-8zM42 28h4a6 6 0 0 1 0 12h-4"/>'};
+let cart={},cat="All",orders=[];
+const $=id=>document.getElementById(id);
+const kes=n=>"KES "+n.toLocaleString("en-KE");
+const left=p=>p.s-(cart[p.id]||0);
+
+function renderFilters(){
+  const cats=["All",...new Set(P.map(p=>p.c))];
+  $("filters").innerHTML=cats.map(c=>`<button aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("");
+}
+function renderGrid(){
+  $("grid").innerHTML=P.filter(p=>cat==="All"||p.c===cat).map(p=>{
+    const l=left(p);
+    const st=p.s===0?'<span class="stock out">Out of stock</span>':p.s<=5?`<span class="stock low">Only ${p.s} left</span>`:`<span class="stock ok">${p.s} in stock</span>`;
+    return `<article class="card"><div class="tile"><svg viewBox="0 0 64 64" aria-hidden="true">${ICON[p.i]}</svg></div><div class="cbody"><h3>${p.n}</h3><span class="price">${kes(p.p)}</span>${st}<button class="add" data-a="${p.id}" ${l<=0?"disabled":""}>${p.s===0?"Out of stock":l<=0?"All in your cart":"Add to cart"}</button></div></article>`;
+  }).join("");
+}
+function renderInv(){
+  $("invBody").innerHTML=P.map(p=>`<tr><td>${p.n}</td><td>${p.c}</td><td>${kes(p.p)}</td><td class="${p.s===0?"out":p.s<=5?"low":"ok"}"><b>${p.s}</b>${p.s===0?" (out)":p.s<=5?" (low)":""}</td><td><button class="mini" data-r="${p.id}">Restock +10</button></td></tr>`).join("");
+}
+function subtotal(){return P.reduce((t,p)=>t+(cart[p.id]||0)*p.p,0)}
+function renderCart(){
+  const rows=P.filter(p=>cart[p.id]);
+  $("cc").textContent=rows.reduce((t,p)=>t+cart[p.id],0);
+  $("items").innerHTML=rows.length?rows.map(p=>`<div class="row"><span>${p.n}<br><small>${kes(p.p)}</small></span><span class="qty"><button data-m="${p.id}" aria-label="Remove one">−</button>${cart[p.id]}<button data-a="${p.id}" aria-label="Add one" ${left(p)<=0?"disabled":""}>+</button></span></div>`).join(""):'<p>Your cart is empty. Add something from the shop.</p>';
+  const sub=subtotal();
+  $("tot").textContent=kes(sub);
+  $("payBtn").disabled=!rows.length;
+}
+function refresh(){renderGrid();renderInv();renderCart()}
+
+document.addEventListener("click",e=>{
+  const t=e.target.closest("button");if(!t)return;
+  if(t.dataset.c){cat=t.dataset.c;renderFilters();renderGrid()}
+  if(t.dataset.a){const p=P.find(x=>x.id==t.dataset.a);if(left(p)>0){cart[p.id]=(cart[p.id]||0)+1;refresh()}}
+  if(t.dataset.m){const id=t.dataset.m;cart[id]--;if(!cart[id])delete cart[id];refresh()}
+  if(t.dataset.r){P.find(x=>x.id==t.dataset.r).s+=10;refresh()}
+});
+function view(v){
+  $("vShop").classList.toggle("hide",v!=="shop");$("vInv").classList.toggle("hide",v!=="inv");
+  $("tShop").setAttribute("aria-pressed",v==="shop");$("tInv").setAttribute("aria-pressed",v==="inv");
+}
+$("tShop").onclick=()=>view("shop");$("tInv").onclick=()=>view("inv");
+function cart_(o){$("drawer").classList.toggle("on",o);$("scrim").classList.toggle("on",o)}
+$("cartBtn").onclick=()=>cart_(true);$("closeCart").onclick=()=>cart_(false);$("scrim").onclick=()=>cart_(false);
+
+function box(h){$("box").innerHTML=h;$("modal").classList.add("on")}
+$("payBtn").onclick=()=>{
+  const ph=$("phone").value.replace(/\s/g,"");
+  if(!/^(?:\+?254|0)[71]\d{8}$/.test(ph)){$("err").textContent="Enter a Safaricom number like 0712 345 678.";return}
+  $("err").textContent="";
+  const total=subtotal();
+  box(`<h2>Check your phone</h2><p>An M-Pesa prompt was sent to ${$("phone").value}.</p><div class="stk"><b>Your Shop Name</b><br>Pay ${kes(total)}<br><small>Enter your M-Pesa PIN to confirm</small></div><button class="btn" id="pin">I’ve entered my PIN (demo)</button> <button class="ghost" id="cx">Cancel</button>`);
+  $("cx").onclick=()=>$("modal").classList.remove("on");
+  $("pin").onclick=()=>{
+    box('<h2>Confirming payment…</h2><p>Waiting for M-Pesa.</p>');
+    setTimeout(()=>done(total),1600);
+  };
+};
+function done(total){
+  const code="S"+Math.random().toString(36).slice(2,11).toUpperCase();
+  const names=[];
+  P.forEach(p=>{if(cart[p.id]){p.s-=cart[p.id];names.push(cart[p.id]+"× "+p.n)}});
+  if(!orders.length)$("ordBody").innerHTML="";
+  orders.unshift(code);
+  $("ordBody").insertAdjacentHTML("afterbegin",`<tr><td>${code}</td><td>${names.join(", ")}</td><td>${$("phone").value}</td><td>${kes(total)}</td></tr>`);
+  cart={};refresh();cart_(false);
+  box(`<h2>Payment received</h2><p>M-Pesa code <b>${code}</b></p><p>Thank you for your order.</p><button class="btn" id="ok">Back to shop</button>`);
+  $("ok").onclick=()=>$("modal").classList.remove("on");
+}
+$("yes").onclick=()=>$("gate").classList.remove("on");
+renderFilters();refresh();
+</script>
+</body>
+</html>
