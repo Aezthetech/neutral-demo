@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inventory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="logo" href="index.html" data-shop-name>Shop</a>
+      <nav><a class="navlink" href="index.html">← Back to shop</a></nav>
+    </header>
+
+    <h1 style="font-size:2.4rem">Inventory</h1>
+    <p class="note">Staff view. On the real site this page would be behind a login.</p>
+
+    <div class="stats" id="stats"></div>
+
+    <div class="tabs">
+      <button data-tab="stock" aria-pressed="true">Stock</button>
+      <button data-tab="orders" aria-pressed="false">Orders</button>
+      <button class="ghost" id="reset" style="margin-left:auto">Reset demo data</button>
+    </div>
+
+    <div id="pStock" class="scroll">
+      <table><thead><tr><th></th><th>Item</th><th>Category</th><th>Price</th><th>In stock</th><th>Status</th><th>Adjust</th></tr></thead><tbody id="stockBody"></tbody></table>
+    </div>
+
+    <div id="pOrders" class="scroll" hidden>
+      <table><thead><tr><th>M-Pesa code</th><th>Time</th><th>Items</th><th>Customer</th><th>Total</th></tr></thead><tbody id="orderBody"></tbody></table>
+    </div>
+  </div>
+
+  <script src="js/products.js"></script>
+  <script src="js/inventory.js"></script>
+</body>
+</html>
